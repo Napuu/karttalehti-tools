@@ -13,6 +13,13 @@ const enum2 = [
   [1, 0],
   [1, 1],
 ];
+const enum3 = [
+  ['A', 'B'],
+  ['C', 'D'],
+  ['E', 'F'],
+  ['G', 'H'],
+];
+const enum4 = ['L', 'R'];
 const X0 = -76000;
 const Y0 = 6570000;
 
@@ -28,17 +35,18 @@ const dy25k = 12000;
 app.get('/', (req, res) => {
   const p = req.query;
   try {
-    if (p.action === 'gettile' && (p.x !== undefined && p.y !== undefined)) {
-      res.send(fromCoordinatesToTile(p.x, p.y));
-    } else if (p.action === 'getbbox' && p.lehti !== undefined) {
+    if (p.action === 'gettile' && p.x !== undefined && p.y !== undefined) {
+      const bbox = fromCoordinatesToTile(p.x, p.y);
+      if (p.splitted === 'true') res.send(bbox + char5(p.x));
+      else res.send(bbox);
+    } else if (p.action === 'getbbox' && p.lehti === undefined) {
       res.send(JSON.stringify(getBboxForTile(p.lehti)));
-    } else if (p.action === "getmtktiles") {
-      res.sendFile(__dirname + "/mtk-tiles");
+    } else if (p.action === 'getall25ktiles') {
+      res.sendFile(__dirname + '/all25ktiles');
     } else {
       res.send('not supported');
     }
   } catch (e) {
-    console.error(e)
     res.send('illegal tilename or something');
   }
 });
@@ -126,4 +134,8 @@ function char4(x, y) {
 function dxyFromChar4(c) {
   const c0 = enum2[parseInt(c) - 1];
   return [c0[0] * dx25k, c0[1] * dy25k];
+}
+
+function char5(x) {
+  return enum4[Math.floor((x - X0) / (dx25k / 2)) % 2];
 }
