@@ -66,28 +66,34 @@ function getBboxForTile(tile) {
 }
 
 function dyFromChar0(c) {
+  if (!c) return "";
   return constants.dy200k * constants.enum0.indexOf(c.toUpperCase());
 }
 function dxFromChar1(c) {
+  if (!c) return "";
   return (parseInt(c) - 2) * constants.dx200k;
 }
 
 function dxyFromChar2(c) {
+  if (!c) return "";
   const c0 = constants.enum2[parseInt(c) - 1];
   return [c0[0] * constants.dx100k, c0[1] * constants.dy100k];
 }
 
 function dxyFromChar3(c) {
+  if (!c) return "";
   const c0 = constants.enum2[parseInt(c) - 1];
   return [c0[0] * constants.dx50k, c0[1] * constants.dy50k];
 }
 
 function dxyFromChar4(c) {
+  if (!c) return "";
   const c0 = constants.enum2[parseInt(c) - 1];
   return [c0[0] * constants.dx25k, c0[1] * constants.dy25k];
 }
 
 function dxyFromChar5(c) {
+  if (!c) return "";
   let t0 = 0;
   for (let i = 0; i < 4; i++) {
     if (constants.enum5[i].indexOf(c) !== -1) {
@@ -101,6 +107,7 @@ function dxyFromChar5(c) {
 }
 
 function dxyFromChar6(c) {
+  if (!c) return "";
   const c0 = constants.enum2[parseInt(c) - 1];
   return [c0[0] * constants.dx5k, c0[1] * constants.dy5k];
 }
