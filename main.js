@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
       p.y !== undefined &&
       p.resolution !== undefined
     ) {
-      res.send(fromCoordinatesToTile(p.x, p.y, p.resolution, p.splitted));
+      res.send(fromCoordinatesToTile(p.x, p.y, p.resolution, p.splitted, p.projection));
     } else if (p.action === 'getbbox' && p.lehti !== undefined) {
-      res.send(JSON.stringify(getBboxForTile(p.lehti)));
+      res.send(JSON.stringify(getBboxForTile(p.lehti, p.projection)));
     } else if (p.action === 'getall25ktiles') {
       res.sendFile(path.resolve('/all25ktiles'));
     } else {

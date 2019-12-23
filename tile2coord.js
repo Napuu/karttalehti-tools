@@ -1,5 +1,6 @@
 const constants = require('./constants.js');
-function getBboxForTile (tile) {
+const proj = require('./reproject.js');
+function getBboxForTile (tile, projection) {
   const lastChar = tile[tile.length - 1];
   const isSplit = lastChar === 'R' || lastChar === 'L';
   if (isSplit) tile = tile.slice(0, tile.length - 1);
@@ -56,12 +57,18 @@ function getBboxForTile (tile) {
 
   if (isSplit) {
     if (lastChar === 'L') {
-      return [ans[0], ans[1], ans[2] - constants['dx' + res] / 2, ans[3]];
+      ans = [ans[0], ans[1], ans[2] - constants['dx' + res] / 2, ans[3]];
     } else {
-      return [ans[0] + constants['dx' + res] / 2, ans[1], ans[2], ans[3]];
+      ans = [ans[0] + constants['dx' + res] / 2, ans[1], ans[2], ans[3]];
     }
-  } else {
+  }
+
+  if (projection === undefined || projection === 'EPSG:3067') {
     return ans;
+  } else if (projection === 'EPSG:3857') {
+    return [...proj.to3857([ans[0], ans[1]]), ...proj.to3857([ans[2], ans[3]])];
+  } else {
+    return [];
   }
 }
 

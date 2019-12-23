@@ -1,5 +1,13 @@
 const constants = require('./constants.js');
-function fromCoordinatesToTile (x, y, res, splitted) {
+const proj = require('./reproject.js');
+function fromCoordinatesToTile (_x, _y, res, splitted, projection) {
+  let x = _x;
+  let y = _y;
+  if (projection !== undefined && projection === 'EPSG:3857') {
+    const temp = proj.to3067([_x, _y]);
+    x = temp[0];
+    y = temp[1];
+  }
   switch (res) {
     case '200k':
       return char0(y) + char1(x) + charSplitted(x, res, splitted);
