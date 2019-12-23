@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 3262;
-const {fromCoordinatesToTile} = require('./coord2tile.js');
-const {getBboxForTile} = require('./tile2coord.js');
+const path = require('path');
+const { fromCoordinatesToTile } = require('./coord2tile.js');
+const { getBboxForTile } = require('./tile2coord.js');
 
 app.get('/', (req, res) => {
   const p = req.query;
@@ -17,7 +18,7 @@ app.get('/', (req, res) => {
     } else if (p.action === 'getbbox' && p.lehti !== undefined) {
       res.send(JSON.stringify(getBboxForTile(p.lehti)));
     } else if (p.action === 'getall25ktiles') {
-      res.sendFile(__dirname + '/all25ktiles');
+      res.sendFile(path.resolve('/all25ktiles'));
     } else {
       res.send('not supported');
     }

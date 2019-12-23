@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./node_modules/semistandard/bin/cmd.js",
+    "fix": "node ./node_modules/semistandard/bin/cmd.js --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "proj4": "^2.6.0"
+  },
+  "devDependencies": {
+    "semistandard": "^14.2.0"
   }
 }
