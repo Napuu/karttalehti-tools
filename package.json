@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/semistandard/bin/cmd.js",
+    "test": "node ./node_modules/semistandard/bin/cmd.js && node testWrapper.js",
     "fix": "node ./node_modules/semistandard/bin/cmd.js --fix"
   },
   "keywords": [],
@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "proj4": "^2.6.0"
+    "proj4": "^2.6.0",
+    "zora": "^3.1.8"
   },
   "devDependencies": {
+    "node-fetch": "^2.6.0",
     "semistandard": "^14.2.0"
   }
 }

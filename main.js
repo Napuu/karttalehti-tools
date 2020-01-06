@@ -5,6 +5,10 @@ const path = require('path');
 const { fromCoordinatesToTile } = require('./coord2tile.js');
 const { getBboxForTile } = require('./tile2coord.js');
 
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
 app.get('/', (req, res) => {
   const p = req.query;
   try {
