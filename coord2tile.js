@@ -3,10 +3,16 @@ const proj = require('./reproject.js');
 function fromCoordinatesToTile (_x, _y, res, splitted, projection) {
   let x = _x;
   let y = _y;
-  if (projection !== undefined && projection === 'EPSG:3857') {
-    const temp = proj.to3067([_x, _y]);
-    x = temp[0];
-    y = temp[1];
+  if (projection !== undefined) {
+    if (projection === 'EPSG:3857') {
+      const temp = proj.from3857to3067([_x, _y]);
+      x = temp[0];
+      y = temp[1];
+    } else if (projection === 'EPSG:4326') {
+      const temp = proj.from4326to3067([_x, _y]);
+      x = temp[0];
+      y = temp[1];
+    }
   }
   switch (res) {
     case '200k':

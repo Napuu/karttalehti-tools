@@ -66,7 +66,9 @@ function getBboxForTile (tile, projection) {
   if (projection === undefined || projection === 'EPSG:3067') {
     return ans;
   } else if (projection === 'EPSG:3857') {
-    return [...proj.to3857([ans[0], ans[1]]), ...proj.to3857([ans[2], ans[3]])];
+    return [...proj.from3067to3857([ans[0], ans[1]]), ...proj.from3067to3857([ans[2], ans[3]])];
+  } else if (projection === 'EPSG:4326') {
+    return [...proj.from3067to4326([ans[0], ans[1]]), ...proj.from3067to4326([ans[2], ans[3]])];
   } else {
     return [];
   }
