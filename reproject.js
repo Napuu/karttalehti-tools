@@ -5,6 +5,7 @@ proj4.defs();
 
 const convert3857to3067 = proj4(proj4('EPSG:3857'), proj4('EPSG:3067'));
 const convert4326to3067 = proj4(proj4('EPSG:4326'), proj4('EPSG:3067'));
+const convert3857to4326= proj4(proj4('EPSG:3857'), proj4('EPSG:4326'));
 
 module.exports = {
   from3857to3067: (coords) => {
@@ -18,5 +19,11 @@ module.exports = {
   },
   from3067to4326: (coords) => {
     return convert4326to3067.inverse(coords);
+  },
+  from3857to4326: (coords) => {
+    return convert3857to4326.forward(coords.map(a => parseFloat(a)));
+  },
+  from4326to3857: (coords) => {
+    return convert3857to4326.inverse(coords);
   }
 };
