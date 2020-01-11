@@ -1,6 +1,13 @@
 const constants = require('./constants.js');
+const utils = require('./utils.js');
 const proj = require('./reproject.js');
-function getBboxForTile (tile, projection) {
+function getBboxForTile (tile, projection, buffer) {
+  if (buffer !== undefined && projection !== 'EPSG:4326') {
+    return 'NOT SUPPORTED';
+  }
+  if (buffer === undefined) {
+    buffer = 0;
+  }
   const lastChar = tile[tile.length - 1];
   const isSplit = lastChar === 'R' || lastChar === 'L';
   if (isSplit) tile = tile.slice(0, tile.length - 1);
@@ -68,7 +75,9 @@ function getBboxForTile (tile, projection) {
   } else if (projection === 'EPSG:3857') {
     return [...proj.from3067to3857([ans[0], ans[1]]), ...proj.from3067to3857([ans[2], ans[3]])];
   } else if (projection === 'EPSG:4326') {
-    return [...proj.from3067to4326([ans[0], ans[1]]), ...proj.from3067to4326([ans[2], ans[3]])];
+    const bboxIn4326 = [...proj.from3067to4326([ans[0], ans[1]]), ...proj.from3067to4326([ans[2], ans[3]])];
+    const bboxWithBuffer = utils.addBufferToBbox(bboxIn4326, buffer);
+    return bboxWithBuffer;
   } else {
     return [];
   }

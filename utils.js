@@ -1,14 +1,29 @@
-const proj = require('./reproject.js');
+const constants = require('./constants.js');
 
-const addNegative1mBufferToBbox(bbox, epsg) => {
-  const earthCircumferenceInMeters = 40007863000;
-  const isAlready4326 = epsg == 'EPSG:4326';
-  let bboxIn4326 = [];
-  if (!isAlready4326) {
-    if (epsg == 'EPSG:3857') {
-      bboxIn4326 = [...proj.from3857to4326[bbox[0], bbox[1]], ...proj.from3857to4326[bbox[2], bbox[3]]];
-    } else if (epsg == 'EPSG:3067') {
-      bboxIn4326 = [...proj.from3067to4326[bbox[0], bbox[1]], ...proj.from3067to4326[bbox[2], bbox[3]]];
-    }
+const addBufferToBbox = (bbox, buffer) => {
+  const xDiff = metersToLongitude(Math.abs(buffer), bbox[1]);
+  const yDiff = metersToLatitude(Math.abs(buffer));
+  if (buffer < 0) {
+    return [bbox[0] + xDiff, bbox[1] + yDiff, bbox[2] - xDiff, bbox[3] - yDiff];
+  } else {
+    return [bbox[0] - xDiff, bbox[1] - yDiff, bbox[2] + xDiff, bbox[3] + yDiff];
   }
-}
+};
+
+const metersToLatitude = (meters) => {
+  const percentageOfFull = meters / (constants.earthCircumferenceInMeters / 4);
+  return percentageOfFull * 90;
+};
+
+const metersToLongitude = (meters, latitude) => {
+  const radiusAtThisLatitude = Math.cos(Math.abs(degToRad(latitude))) * constants.earthDiameterInMeters;
+  const circumferenceAtThisLatitude = Math.PI * radiusAtThisLatitude * 2;
+  const percentageOfFull = meters / (circumferenceAtThisLatitude / 2);
+  return percentageOfFull * 180;
+};
+
+const degToRad = (deg) => Math.PI * deg / 180;
+
+module.exports = {
+  addBufferToBbox
+};

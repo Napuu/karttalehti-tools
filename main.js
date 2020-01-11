@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
     ) {
       res.send(fromCoordinatesToTile(p.x, p.y, p.resolution, p.splitted, p.projection));
     } else if (p.action === 'getbbox' && p.lehti !== undefined) {
-      res.send(JSON.stringify(getBboxForTile(p.lehti, p.projection)));
+      res.send(JSON.stringify(getBboxForTile(p.lehti, p.projection, p.buffer)));
     } else if (p.action === 'getall25ktiles') {
       res.sendFile(path.resolve('/all25ktiles'));
     } else {

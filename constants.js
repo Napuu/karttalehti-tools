@@ -36,5 +36,7 @@ module.exports = {
   dx10k: 6000,
   dy10k: 6000,
   dx5k: 3000,
-  dy5k: 3000
+  dy5k: 3000,
+  earthCircumferenceInMeters: 40007863,
+  earthDiameterInMeters: 6367450
 };

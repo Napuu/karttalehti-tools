@@ -5,7 +5,7 @@ proj4.defs();
 
 const convert3857to3067 = proj4(proj4('EPSG:3857'), proj4('EPSG:3067'));
 const convert4326to3067 = proj4(proj4('EPSG:4326'), proj4('EPSG:3067'));
-const convert3857to4326= proj4(proj4('EPSG:3857'), proj4('EPSG:4326'));
+const convert3857to4326 = proj4(proj4('EPSG:3857'), proj4('EPSG:4326'));
 
 module.exports = {
   from3857to3067: (coords) => {
