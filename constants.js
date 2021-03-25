@@ -23,6 +23,10 @@ module.exports = {
     ['E', 'F'],
     ['G', 'H']
   ],
+  enum6: [
+    ['A', 'B'],
+    ['C', 'D']
+  ],
   X0: -76000,
   Y0: 6570000,
   dx200k: 192000,
@@ -37,6 +41,8 @@ module.exports = {
   dy10k: 6000,
   dx5k: 3000,
   dy5k: 3000,
+  "dx2.5k": 1500,
+  "dy2.5k": 1500,
   earthCircumferenceInMeters: 40007863,
   earthDiameterInMeters: 6367450
 };

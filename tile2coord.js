@@ -62,6 +62,14 @@ function getBboxForTile (tile, projection, buffer) {
     res = '5k';
   }
 
+  const tc7 = dxyFromChar7(tile[7]);
+  x += tc7[0];
+  y += tc7[1];
+  if (tile.length === 8 && !isSplit) {
+    ans = [x, y, x + constants["dx2.5k"], y + constants["dy2.5k"]];
+    res = '2.5k';
+  }
+
   if (isSplit) {
     if (lastChar === 'L') {
       ans = [ans[0], ans[1], ans[2] - constants['dx' + res] / 2, ans[3]];
@@ -128,6 +136,21 @@ function dxyFromChar6 (c) {
   if (!c) return '';
   const c0 = constants.enum2[parseInt(c) - 1];
   return [c0[0] * constants.dx5k, c0[1] * constants.dy5k];
+}
+
+function dxyFromChar7 (c) {
+  if (!c) return '';
+  let t0 = 0;
+  for (let i = 0; i < 2; i++) {
+    if (constants.enum6[i].indexOf(c) !== -1) {
+      t0 = i;
+      break;
+    }
+  }
+
+  const c0 = constants.enum6[t0];
+  const c1 = c0.indexOf(c);
+  return [t0 * constants["dx2.5k"], c1 * constants["dy2.5k"]];
 }
 
 exports.getBboxForTile = getBboxForTile;
